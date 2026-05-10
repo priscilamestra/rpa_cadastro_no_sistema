@@ -8,80 +8,104 @@
 import pandas as pd
 import pyautogui
 from time import sleep
+import subprocess
+import os
 
-pyautogui.PAUSE = 1
-link = 'http://localhost:8000/.venv/sistema/cadastro_de_produtos/login.html'
+# 1. Garante que o Python está olhando para a pasta certa
+caminho_projeto = os.path.dirname(os.path.abspath(__file__))
+os.chdir(caminho_projeto)
 
-pyautogui.hotkey('win', 'r') # abrir o menu executar do Windows
-pyautogui.write('chrome --incognito') # abrir o navegador Google Chrome no modo anônimo
-pyautogui.press('enter')
+# 2. Liga o servidor em segundo plano (sem travar o script)
+# Isso equivale a digitar o comando no terminal automaticamente
+server = subprocess.Popen(['python', '-m', 'http.server', '8000'])
 
-sleep(1) # pausa para o navegador abrir
+# 3. Dá um tempinho para o servidor "acordar"
+sleep(2)
 
-pyautogui.write(link)
-pyautogui.press('enter')
+try:
+    print("Servidor iniciado e automação rodando...")
+    
+    pyautogui.PAUSE = 1
+    link = 'http://localhost:8000/sistema/cadastro_de_produtos/login.html'
 
-sleep(3)
+    pyautogui.hotkey('win', 'r') # abrir o menu executar do Windows
+    pyautogui.write('chrome --incognito') # abrir o navegador Google Chrome no modo anônimo
+    pyautogui.press('enter')
 
-pyautogui.click(x=-818, y=382) # clicar no campo email
-pyautogui.write('usuario@exemplo.com')
-pyautogui.press('tab') # passar para o campo de senha
-pyautogui.write('senha123')
-pyautogui.press('tab') # passar para o botão de login
-pyautogui.press('enter')
+    sleep(2) # pausa para o navegador abrir
 
-sleep(1)
+    pyautogui.write(link)
+    pyautogui.press('enter')
 
-tabela = pd.read_csv('produtos.csv')
+    sleep(3)
 
-# Cadastrar primeiro produto
-# Para cada linha da tabela, ou seja, para cada produto
-# O código dentro do for vai ser repetido, ou seja, o processo de cadastro de produto vai ser repetido para cada produto da tabela
-# Index é o número da linha, ou seja, o número do produto na tabela (índice começa em 0, então o primeiro produto tem índice 0, o segundo produto tem índice 1, e assim por diante)
+    pyautogui.click(x=-818, y=382) # clicar no campo email
+    pyautogui.write('usuario@exemplo.com')
+    pyautogui.press('tab') # passar para o campo de senha
+    pyautogui.write('senha123')
+    pyautogui.press('tab') # passar para o botão de login
+    pyautogui.press('enter')
 
-for linha in tabela.index: 
+    sleep(1)
 
-    # Codigo do produto
-    pyautogui.click(x=-856, y=291) # clicar no campo de código do produto
-    codigo = str(tabela.loc[linha, 'codigo'])# pegar o código do produto da tabela
-    pyautogui.write(codigo)
-    pyautogui.press('tab')
+    tabela = pd.read_csv('produtos.csv')
 
-    # Marca
-    marca = str(tabela.loc[linha, 'marca'])
-    pyautogui.write(marca)
-    pyautogui.press('tab')
+    # Cadastrar primeiro produto
+    # Para cada linha da tabela, ou seja, para cada produto
+    # O código dentro do for vai ser repetido, ou seja, o processo de cadastro de produto vai ser repetido para cada produto da tabela
+    # Index é o número da linha, ou seja, o número do produto na tabela (índice começa em 0, então o primeiro produto tem índice 0, o segundo produto tem índice 1, e assim por diante)
 
-    # Tipo
-    tipo = str(tabela.loc[linha, 'tipo'])
-    pyautogui.write(tipo)
-    pyautogui.press('tab')
+    for linha in tabela.index: 
 
-    # Categoria
-    categoria = str(tabela.loc[linha, 'categoria'])
-    pyautogui.write(categoria)
-    pyautogui.press('tab')
+        # Codigo do produto
+        pyautogui.click(x=-856, y=291) # clicar no campo de código do produto
+        codigo = str(tabela.loc[linha, 'codigo'])# pegar o código do produto da tabela
+        pyautogui.write(codigo)
+        pyautogui.press('tab')
 
-    # Preco
-    preco = str(tabela.loc[linha, 'preco_unitario'])
-    pyautogui.write(preco)
-    pyautogui.press('tab')
+        # Marca
+        marca = str(tabela.loc[linha, 'marca'])
+        pyautogui.write(marca)
+        pyautogui.press('tab')
 
-    # Custo
-    custo = str(tabela.loc[linha, 'custo'])
-    pyautogui.write(custo)
-    pyautogui.press('tab')
+        # Tipo
+        tipo = str(tabela.loc[linha, 'tipo'])
+        pyautogui.write(tipo)
+        pyautogui.press('tab')
 
-    # Obs
-    obs = str(tabela.loc[linha, 'obs'])
-    if obs != 'nan': # se a observação não for NaN, ou seja, diferente de NaN, então escreva a observação, caso contrário, deixe o campo de observação vazio
-        pyautogui.write(obs)
-    pyautogui.press('tab')
+        # Categoria
+        categoria = str(tabela.loc[linha, 'categoria'])
+        pyautogui.write(categoria)
+        pyautogui.press('tab')
 
-    pyautogui.press('enter') # passar para o botão de enviar
+        # Preco
+        preco = str(tabela.loc[linha, 'preco_unitario'])
+        pyautogui.write(preco)
+        pyautogui.press('tab')
 
-    # voltar para o início da tela para cadastrar o próximo produto
-    pyautogui.scroll(5000) # rolar a tela para cima (positivo para rolar para cima, negativo para rolar para baixo)
+        # Custo
+        custo = str(tabela.loc[linha, 'custo'])
+        pyautogui.write(custo)
+        pyautogui.press('tab')
 
+        # Obs
+        obs = str(tabela.loc[linha, 'obs'])
+        if obs != 'nan': # se a observação não for NaN, ou seja, diferente de NaN, então escreva a observação, caso contrário, deixe o campo de observação vazio
+            pyautogui.write(obs)
+        pyautogui.press('tab')
 
-# NaN = Not a Number, ou seja, um valor que não é um número, um valor vazio ou nulo.
+        pyautogui.press('enter') # passar para o botão de enviar
+
+        # voltar para o início da tela para cadastrar o próximo produto
+        pyautogui.scroll(5000) # rolar a tela para cima (positivo para rolar para cima, negativo para rolar para baixo)
+        
+        # NaN = Not a Number, ou seja, um valor que não é um número, um valor vazio ou nulo.
+
+except Exception as e:
+    # 4. O Relato: avisa o que deu errado
+    print(f"Opa, travou em: {e}")
+
+finally:
+    # 5. Quando o script terminar (ou der erro), ele desliga o servidor sozinho
+    server.terminate()
+    print("Servidor desligado.")
