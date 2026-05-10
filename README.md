@@ -10,7 +10,7 @@ Este projeto é uma automação de Processos Robóticos (RPA) desenvolvida em Py
 
 ## Tecnologias Utilizadas
 
-- **Python 3.x**
+- **Python 3.14**
 - **PyAutoGUI:** Automação de interface (teclado e mouse).
 - **Pandas:** Manipulação da base de dados (CSV).
 - **Subprocess & OS:** Gerenciamento de infraestrutura e caminhos de sistema.
