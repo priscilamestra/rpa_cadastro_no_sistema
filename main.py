@@ -106,7 +106,7 @@ try:
         if obs != 'nan': # se a observação não for NaN, ou seja, diferente de NaN, então escreva a observação, caso contrário, deixe o campo de observação vazio
             pyautogui.write(obs)
         pyautogui.press('tab') # passar para o botão de enviar
-
+        
         pyautogui.press('enter')
         
         # NaN = Not a Number, ou seja, um valor que não é um número, um valor vazio ou nulo.
