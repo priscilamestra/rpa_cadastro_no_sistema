@@ -34,12 +34,16 @@ try:
 
     sleep(2) # pausa para o navegador abrir
 
+    pyautogui.hotkey('ctrl', 'l') # Atalho universal do Chrome para focar na barra de pesquisa/URL
+
+    sleep(1)
+
     pyautogui.write(link)
     pyautogui.press('enter')
 
     sleep(3)
 
-    pyautogui.click(x=-818, y=382) # clicar no campo email
+    pyautogui.press('tab') # clicar no campo email
     pyautogui.write('usuario@exemplo.com')
     pyautogui.press('tab') # passar para o campo de senha
     pyautogui.write('senha123')
@@ -54,14 +58,23 @@ try:
     # Para cada linha da tabela, ou seja, para cada produto
     # O código dentro do for vai ser repetido, ou seja, o processo de cadastro de produto vai ser repetido para cada produto da tabela
     # Index é o número da linha, ou seja, o número do produto na tabela (índice começa em 0, então o primeiro produto tem índice 0, o segundo produto tem índice 1, e assim por diante)
+    
+    pyautogui.hotkey('ctrl', 'l') # mouse voltar na barra de pesquisa/URL para garantir que o próximo 'tab' vai clicar no campo de código do produto
+    
+    sleep(1)
+
+    pyautogui.press('enter')
+
+    sleep (3)
+
+    pyautogui.press('tab') # clicar no campo de código do produto
 
     for linha in tabela.index: 
 
         # Codigo do produto
-        pyautogui.click(x=-856, y=291) # clicar no campo de código do produto
         codigo = str(tabela.loc[linha, 'codigo'])# pegar o código do produto da tabela
         pyautogui.write(codigo)
-        pyautogui.press('tab')
+        pyautogui.press('tab')      
 
         # Marca
         marca = str(tabela.loc[linha, 'marca'])
@@ -92,12 +105,9 @@ try:
         obs = str(tabela.loc[linha, 'obs'])
         if obs != 'nan': # se a observação não for NaN, ou seja, diferente de NaN, então escreva a observação, caso contrário, deixe o campo de observação vazio
             pyautogui.write(obs)
-        pyautogui.press('tab')
+        pyautogui.press('tab') # passar para o botão de enviar
 
-        pyautogui.press('enter') # passar para o botão de enviar
-
-        # voltar para o início da tela para cadastrar o próximo produto
-        pyautogui.scroll(5000) # rolar a tela para cima (positivo para rolar para cima, negativo para rolar para baixo)
+        pyautogui.press('enter')
         
         # NaN = Not a Number, ou seja, um valor que não é um número, um valor vazio ou nulo.
 
