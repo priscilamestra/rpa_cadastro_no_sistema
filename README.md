@@ -2,6 +2,10 @@
 
 Este projeto é uma automação de Processos Robóticos (RPA) desenvolvida em Python para simular o fluxo de trabalho em um sistema ERP. O diferencial desta solução é a capacidade de gerenciar seu próprio ambiente de execução, iniciando e finalizando o servidor web automaticamente.
 
+## Requisitos de Sistema
+- **Sistema Operacional:** Desenvolvido e testado exclusivamente para **Windows**. 
+- **Motivo:** A automação utiliza atalhos de teclado (`Win + R`, `Ctrl + L`) e comandos de terminal (`python -m http.server`) específicos do ambiente Windows para garantir a execução fluida. Para usar em outros sistemas, mude os atalhos no próprio script.
+
 ## Diferenciais do Projeto
 
 - **Servidor Auto-Gerenciado:** O script utiliza a biblioteca `subprocess` para iniciar um servidor HTTP local na porta 8000, eliminando a necessidade de configuração manual do ambiente de teste.
@@ -22,3 +26,16 @@ Este projeto é uma automação de Processos Robóticos (RPA) desenvolvida em Py
 ```bash
 git clone [https://github.com/seu-usuario/rpa_cadastro_no_sistema.git](https://github.com/seu-usuario/rpa_cadastro_no_sistema.git)
 cd rpa_cadastro_no_sistema
+
+## ⚙️ Personalização (Coordenadas Fixas)
+
+Caso você prefira utilizar coordenadas específicas para cliques na sua tela em vez da navegação por atalhos (`Ctrl + L`), o projeto inclui um script auxiliar de reserva:
+
+### Script `posicao.py`
+Este script serve para identificar as coordenadas exatas (X e Y) de qualquer campo ou da barra de URL no seu monitor.
+
+**Como usar:**
+1. Execute o script: `python posicao.py`
+2. Posicione o mouse sobre o campo desejado (ex: barra de endereços ou campo de login).
+3. Aguarde o tempo configurado (geralmente 5 segundos) e o script imprimirá as coordenadas no terminal.
+4. Substitua os comandos de `hotkey` ou `press` relacionados a clicar nos campos no `main.py` por `pyautogui.click(x=VALOR, y=VALOR)` usando os números obtidos.
