@@ -59,15 +59,16 @@ try:
     # O código dentro do for vai ser repetido, ou seja, o processo de cadastro de produto vai ser repetido para cada produto da tabela
     # Index é o número da linha, ou seja, o número do produto na tabela (índice começa em 0, então o primeiro produto tem índice 0, o segundo produto tem índice 1, e assim por diante)
     
-    pyautogui.hotkey('ctrl', 'l') # mouse voltar na barra de pesquisa/URL para garantir que o próximo 'tab' vai clicar no campo de código do produto
+    pyautogui.hotkey('ctrl', 'l') # mouse seleciona/se posiciona na barra de pesquisa/URL 
     
     sleep(1)
 
-    pyautogui.press('enter')
+    pyautogui.press('esc') # Tirar a seleção destacada da url
+    pyautogui.press('esc') # Tirar a seleção da url, para garantir que ao pressionar 'tab' vai passar para o campo do código do produto.
 
-    sleep (3)
+    sleep (1)
 
-    pyautogui.press('tab') # clicar no campo de código do produto
+    pyautogui.press('tab') # passa para o campo do código do produto
 
     for linha in tabela.index: 
 
